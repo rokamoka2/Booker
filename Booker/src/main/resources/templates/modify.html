@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
+	<head>
+	<meta charset="utf-8">
+	</head>
+	<div id="content1" layout:fragment="content">	
+		<div class="container">
+			<form action="#" th:action="@{/modifybook}" th:object="${book}" method="post">
+				<div class="form-group">
+	   				<input type="text" th:field="*{id}" value="${book.id}" class="form-control form-control-lg" id="id" hidden="true">
+	 			</div>
+				<div class="form-group">
+	   				<label for="author" class="formlabel">Szerző:</label>
+	   				<input type="text" th:field="*{author}" value="${book.author}" class="form-control form-control-lg" id="author" placeholder="Szerző neve">
+	 			</div>
+	 			<div class="form-group">
+	   				<label for="title" class="formlabel">Cím:</label>
+	   				<input type="text" th:field="*{title}" value="${book.title}" class="form-control form-control-lg" id="title" placeholder="A könyv címe">
+	 			</div>
+	 			<div class="form-group">
+	   				<label for="genre" class="formlabel">Műfaj:</label>
+	   				<input type="text" th:field="*{genre}" value="${book.genre}" class="form-control form-control-lg" id="genre" placeholder="A könyv műfaja">
+	 			</div>
+	 			<div class="form-group">
+	   				<label for="releaseYear" class="formlabel">Kiadás éve:</label>
+	   				<input type="number" th:field="*{releaseYear}" value="${book.releaseYear}" class="form-control form-control-lg" id="releaseYear">
+	 			</div>
+	 			<div class="form-group">
+	   				<label for="series" class="formlabel">Sorozat:</label>
+	   				<input type="text" th:field="*{series}" value="${book.series}" class="form-control form-control-lg" id="series" placeholder="A sorozat neve (ha van)">
+	 			</div>
+	 			<div class="form-group">
+	   				<label for="place" class="formlabel">Hely:</label>
+	   				<input type="text" th:field="*{place}" value="${book.place}" class="form-control form-control-lg" id="place" placeholder="A könyv fizikai elhelyezkedése">
+	 			</div>
+	 			<button type="submit" class="btn btn-success">Küldés</button>
+	 			<button type="reset" class="btn btn-danger">Visszaállítás</button>				
+			</form>
+		</div>		
+
+	</div>
+			</html>

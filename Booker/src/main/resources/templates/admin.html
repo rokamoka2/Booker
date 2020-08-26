@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
+	<head>
+	<meta charset="utf-8">
+	</head>
+			<div id="content1" layout:fragment="content">
+			<div id="contact">
+				<table id="contact" class="table">
+ 					 <tr>
+   						 <th>ID</th>
+   						 <th>Név</th>
+    					 <th>Kor</th>
+    					 <th>Roles</th>
+    				</tr>
+    				<tr th:each = "user : ${users}">
+    					<td th:text = "${user.id}">Maria Anders</td>
+    					<td th:text = "${user.username}">Kamu cím</td>
+    					<td th:text = "${user.age}">Alfreds Futterkiste</td>    
+    					<td th:text = "${user.roles}">ADMIN</td>		 
+    				</tr>
+    			</table>
+    			<br>
+    				<table id="contact" class="table">
+ 					 <tr>
+   						 <th>ID</th>
+   						 <th>Név</th>
+    				</tr>
+    				<tr th:each = "role : ${roles}">
+    					<td th:text = "${role.id}">Maria Anders</td>
+    					<td th:text = "${role.name}">Kamu cím</td>					 
+    				</tr>
+    			</table>
+    			<br>
+    			<form id="contact" action="#" th:action="@{/adduser}" th:object="${newuser}" method="post">
+    				<p>Új felhasználó:</p>
+    				<p><input type="text" th:field="*{username}" placeholder="Név"/></p>
+    				<p>Jelszó:</p>
+    				<p><input type="password" th:field="*{password}" placeholder="Jelszó"/></p>
+    				<p>Email:</p>
+    				<p><input type="text" th:field="*{email}" placeholder="Email"/></p>
+    				<p>Évszám: </p>
+    				<p><input type="number" th:field="*{age}" placeholder="Kor"/></p>
+       				<p><input type="submit" value="Küldés" /> <input type="reset" value="Reset" /></p>
+    			</form>
+    			<br>
+    			   <form id="contact" action="#" th:action="@{/addrole}" th:object="${newrole}" method="post">
+    				<p>Új szerepkör:</p>
+    				<p><input type="text" th:field="*{name}" placeholder="Név"/></p>
+       				<p><input type="submit" value="Küldés" /> <input type="reset" value="Reset" /></p>
+    			</form>
+    			</div>
+			</div>
+		</html>
+

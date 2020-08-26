@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<div id="content1" layout:fragment="content" class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<h2 th:text= "${count}"></h2>
+				<div class="table-responsive">
+					<table class="table">
+	 					 <tr>
+	 					 	<th class="align-middle text-center">Szerző</th>
+	   						<th class="align-middle text-center">Cím</th>
+	   						<th class="align-middle text-center">Műfaj</th>
+	   						<th class="align-middle text-center">Sorozat</th>
+	   						<th class="align-middle text-center">Kiadás éve</th>
+	   						<th></th>
+	    				</tr>
+	    				<tr th:each = "book : ${books}">
+	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/search/{searched}(searched=${book.author})}" th:text = "${book.author}" >John Wayne</a></td>
+	    					 <td class="align-middle" th:text = "${book.title}">Kamu cím</td>
+	    					 <td class="align-middle" th:text = "${book.genre}">Germany</td>
+	    					 <td class="align-middle" th:text = "${book.series}">Germany</td>
+	    					 <td class="align-middle" th:text = "${book.releaseYear}">Alfreds Futterkiste</td>
+	    					 <td><a th:href="@{/modify/{id}(id=${book.id})}">Módosítás</a><br>
+	    					 <a th:href="@{/delete/{id}(id=${book.id})}" onClick="return Confirm();">Törlés</a></td>
+	    				</tr>
+	    			</table>
+				</div>
+    		</div>
+		</div>
+	</div>
+</html>
+
