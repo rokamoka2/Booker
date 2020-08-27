@@ -6,7 +6,7 @@
 	<div id="content1" layout:fragment="content" class="container-fluid">
 		<div class="row">
 			<div class="col">
-				<h2>Ennyi könyv van az adatbázisban: <span th:text= "${count}"> </span></h2>
+				<h2>Ennyi könyvem van: <span th:text= "${count}"> </span></h2>
 				<div class="table-responsive">
 					<table class="table">
 	 					 <tr>
@@ -15,7 +15,6 @@
 	   						<th class="align-middle text-center">Műfaj</th>
 	   						<th class="align-middle text-center">Sorozat</th>
 	   						<th class="align-middle text-center">Kiadás éve</th>
-	   						<th></th>
 	    				</tr>
 	    				<tr th:each = "book : ${books}">
 	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/search/{searched}(searched=${book.author})}" th:text = "${book.author}" >John Wayne</a></td>
@@ -23,11 +22,6 @@
 	    					 <td class="align-middle" th:text = "${book.genre}">Germany</td>
 	    					 <td class="align-middle" th:text = "${book.series}">Germany</td>
 	    					 <td class="align-middle" th:text = "${book.releaseYear}">Alfreds Futterkiste</td>
-	    					 <td>
-	    					 	<a th:href="@{/claim/{id}(id=${book.id})}">Bejelölés</a><br>
-	    					 	<a th:href="@{/modify/{id}(id=${book.id})}">Módosítás</a><br>
-	    					 	<a th:href="@{/delete/{id}(id=${book.id})}" onClick="return Confirm();">Törlés</a>
-	    					 </td>
 	    				</tr>
 	    			</table>
 				</div>

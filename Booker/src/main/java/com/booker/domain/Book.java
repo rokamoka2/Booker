@@ -1,16 +1,16 @@
 package com.booker.domain;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.github.javafaker.Faker;
 
 @Entity
 @Table(name="books")
@@ -27,22 +27,23 @@ public class Book {
 	private String series;
 	private String place;
 	private Date notedDate;
-	@ManyToOne
-	private User user;
+	@ManyToMany(mappedBy = "books")
+	private Set<User> users = new HashSet<User>();
+	
+//	@ManyToOne
+//	private User user;
 	
 	
-	public void Fake(User user) {
-		Faker faker = new Faker();
-		this.setAuthor(faker.book().author());
-		this.setNotedDate(new Date());
-		this.setGenre(faker.book().genre());
-		this.setReleaseYear(2003);
-		this.setPlace("Polc");
-		this.setSeries("Kamu könyvek");
-		this.setTitle(faker.book().title());
-		this.setUser(user);
-		
-	}
+//	public void Fake(User user) {
+//		Faker faker = new Faker();
+//		this.setAuthor(faker.book().author());
+//		this.setNotedDate(new Date());
+//		this.setGenre(faker.book().genre());
+//		this.setReleaseYear(2003);
+//		this.setPlace("Polc");
+//		this.setSeries("Kamu könyvek");
+//		this.setTitle(faker.book().title());		
+//	}
 	
 	//Constructor
 	public Book() {
@@ -85,12 +86,12 @@ public class Book {
 		this.notedDate = notedDate;
 	}
 
-	public User getUser() {
-		return user;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 	public void setId(Long id) {

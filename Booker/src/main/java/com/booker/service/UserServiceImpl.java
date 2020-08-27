@@ -57,12 +57,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userRepository.findAll();
 	}
 
-	public void SaveUser(User newuser) {
+	public void addUser(User newuser) {
 		// TODO Auto-generated method stub
 		newuser.setPassword(encoder.encode(newuser.getPassword()));
 		Set<Role> roles = new HashSet<Role>();
 		if (roleService.getSpecificRole(defaRole) != null) {
-			System.out.println("hinnye");
 			roles.add(roleService.getSpecificRole(defaRole));
 		} else {
 			Role newrole = new Role();
@@ -73,6 +72,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		
 		newuser.setRoles(roles);
 		userRepository.save(newuser);
+		
+	}
+	
+	public void saveUser(User user) {
+		userRepository.save(user);
 		
 	}
 	

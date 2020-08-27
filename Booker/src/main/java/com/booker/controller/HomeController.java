@@ -2,10 +2,13 @@ package com.booker.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,16 +40,34 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String Index(Model model){
+		List<Book> books = bookService.getBooks();
 		model.addAttribute("pageTitle", "Könyv Adatbázis");	
-		model.addAttribute("books", bookService.getBooks());
-		model.addAttribute("count", "Ennyi könyvet találtam: " +bookService.getBooks().size());
+		model.addAttribute("books", books);
+		model.addAttribute("count", books.size());
 		return "index";		
+	}
+	
+	@RequestMapping("/mybooks")
+	public String MyBooks(Model model){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		model.addAttribute("pageTitle", "Könyv Adatbázis");	
+		Set books = userService.findByUsername(auth.getName()).getBooks();		
+		model.addAttribute("books", books);
+		model.addAttribute("count", books.size());
+		return "mybooks";		
 	}
 	
 	@RequestMapping("/login")
 	public String Login(Model model){
 		model.addAttribute("pageTitle", "Könyv Adatbázis");	
 		return "login";		
+	}
+	
+	@RequestMapping("/regist")
+	public String Regist(Model model){
+		model.addAttribute("pageTitle", "Könyv Adatbázis - Regisztráció");
+		model.addAttribute("newuser", new User());
+		return "regist";		
 	}
 	
 	@RequestMapping("/add")
@@ -60,9 +81,7 @@ public class HomeController {
 	public String addbook(@ModelAttribute Book book,Model model) {
 		System.out.println("ÚJ könyv " + book.getTitle() );
 		book.setNotedDate(new Date());
-		Long id = (long) 1;
-		book.setUser(userService.FindByID(id));
-		log.info(book.getUser().getUsername());
+//		log.info(book.getUser().getUsername());
 		bookService.SaveBook(book);
 		log.info(book.getTitle() + " elmentve!");
 		return this.Index(model);
@@ -81,7 +100,7 @@ public class HomeController {
 	@PostMapping("/adduser")
 	public String adduser(@ModelAttribute User newuser,Model model) {
 		log.info("ÚJ user " + newuser.getUsername() );
-		userService.SaveUser(newuser);
+		userService.addUser(newuser);
 		log.info(newuser.getUsername() + " elmentve!");
 		return this.Admin(model);
 	}

@@ -1,7 +1,6 @@
 package com.booker.domain;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -10,11 +9,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="users")
@@ -35,10 +33,14 @@ public class User {
 	@JoinTable( name = "users_roles", joinColumns = {@JoinColumn(name="user_id")}, inverseJoinColumns = {@JoinColumn(name="role_id")})
 	private Set<Role> roles = new HashSet<Role>();
 	
+	@ManyToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+	@JoinTable( name = "users_books", joinColumns = {@JoinColumn(name="user_id")}, inverseJoinColumns = {@JoinColumn(name="book_id")})
+	private Set<Book> books = new HashSet<Book>();
 	
 	
-	@OneToMany(mappedBy ="user")
-	private List<Book> books;
+	
+//	@OneToMany(mappedBy ="user")
+//	private List<Book> books;
 	
 	
 	public User() {}
@@ -73,14 +75,17 @@ public class User {
 	public void setAge(int age) {
 		this.age = age;
 	}
-
-
-	public List<Book> getBooks() {
+	
+	
+	
+	public Set<Book> getBooks() {
 		return books;
 	}
 
 
-	public void setBooks(List<Book> books) {
+
+
+	public void setBooks(Set<Book> books) {
 		this.books = books;
 	}
 

@@ -59,18 +59,17 @@
   							</button>
 				        </div>
 
-							<form th:action="@{/login}" method="post">
-							  <div class="form-group" >
-							    <label for="exampleInputUsername" style="font-size: 25px;">Felhasználónév:</label>
-							    <input type="text" name="username" class="form-control form-control-lg" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Felhasználónév">
-							  </div>
-							  <div class="form-group">
-							    <label for="exampleInputPassword1" style="font-size: 25px;">Jelszó:</label>
-							    <input type="password" name="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Jelszó">
-							  </div>
-							  <input type="submit" class="btn btn-success" value="Belépés"/>
-							  <a href="/regist" class="btn btn-primary">Regisztrálok</a>
-							</form>
+							<form id="contact" action="#" th:action="@{/adduser}" th:object="${newuser}" method="post">
+				  				<p>Új felhasználó:</p>
+				  				<p><input type="text" th:field="*{username}" placeholder="Név"/></p>
+				  				<p>Jelszó:</p>
+				  				<p><input type="password" th:field="*{password}" placeholder="Jelszó"/></p>
+				  				<p>Email:</p>
+				  				<p><input type="text" th:field="*{email}" placeholder="Email"/></p>
+				  				<p>Évszám: </p>
+				  				<p><input type="number" th:field="*{age}" placeholder="Kor"/></p>
+				     			<p><input type="submit" value="Küldés" /> <input type="reset" value="Reset" /></p>
+				  			</form>
 				    </div>
 				</div>    
 			</div>

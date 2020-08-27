@@ -1,1 +1,0 @@
-INSERT INTO user ("ID" , "NAME" , "AGE") VALUES (1, 'csabi', 23);
