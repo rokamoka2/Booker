@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="layouts/main">
+	<head>
+	<meta charset="utf-8">
+	</head>
+	<div id="content1" layout:fragment="content">	
+		<div class="container">
+			<div id="title">
+				<h1>
+					<span th:utext="${book.author}">író neve</span>:
+					<span th:utext="${book.title}">Könyv címe!</span>
+				</h1>
+			</div>
+			
+			<div th:if="${detailed == true}" id="detailed info">
+				<div id="cover"><img th:src="${image}"></div>
+				<div id="desc" th:utext="${description}">Részletes leírás</div>
+			</div>
+		</div>		
+
+	</div>
+			</html>

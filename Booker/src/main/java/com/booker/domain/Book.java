@@ -19,6 +19,8 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long id;
+	private Long molyId;
+	private String isbn;
 	private String title;
 	private String author;
 	@Column(nullable = true)
@@ -29,22 +31,7 @@ public class Book {
 	private Date notedDate;
 	@ManyToMany(mappedBy = "books")
 	private Set<User> users = new HashSet<User>();
-	
-//	@ManyToOne
-//	private User user;
-	
-	
-//	public void Fake(User user) {
-//		Faker faker = new Faker();
-//		this.setAuthor(faker.book().author());
-//		this.setNotedDate(new Date());
-//		this.setGenre(faker.book().genre());
-//		this.setReleaseYear(2003);
-//		this.setPlace("Polc");
-//		this.setSeries("Kamu könyvek");
-//		this.setTitle(faker.book().title());		
-//	}
-	
+		
 	//Constructor
 	public Book() {
 	}
@@ -113,8 +100,23 @@ public class Book {
 	public void setPlace(String place) {
 		this.place = place;
 	}
-	
 
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public Long getMolyId() {
+		return molyId;
+	}
+
+	public void setMolyId(Long molyId) {
+		this.molyId = molyId;
+	}
+	
 	
 
 }
