@@ -51,12 +51,17 @@ import com.booker.service.UserServiceImpl;
 	//		User user = getAuthenticatedUser();
 			Book book = bookService.FindById(id);
 			if ( book.getMolyId() == null && book.getIsbn() != null && !book.getIsbn().isEmpty()) {
-				JSONObject obj = new JSONObject(API.GetBookByISBN(book.getIsbn()));
+				JSONObject obj = new JSONObject(API.getBookByISBN(book.getIsbn()));
 				book.setMolyId(obj.getLong("id"));
 				bookService.SaveBook(book);
 			}
+//			else if ( book.getMolyId() == null) {
+//				JSONObject obj = new JSONObject(API.getBookByTitle(book.getTitle()));
+//				book.setMolyId(obj.getLong("id"));
+//				bookService.SaveBook(book);
+//			}
 			if ( book.getMolyId()!= null){
-				JSONObject obj = new JSONObject(API.GetBookByMolyID(book.getMolyId()));
+				JSONObject obj = new JSONObject(API.getBookByMolyID(book.getMolyId()));
 				description = obj.getJSONObject("book").getString("description");
 				image = obj.getJSONObject("book").getString("cover");
 				detailed = true;			

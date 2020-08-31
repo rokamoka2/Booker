@@ -16,6 +16,10 @@
 				<div id="cover"><img th:src="${image}"></div>
 				<div id="desc" th:utext="${description}">Részletes leírás</div>
 			</div>
+			<div th:if="${detailed == false}" id="detailed info">
+				<div id="desc">Sajnos nem található részletes információ.</div>
+				<div id="desc">Töltsd ki vagy javítsd a könyv ISBN számát!</div>
+			</div>
 		</div>		
 
 	</div>

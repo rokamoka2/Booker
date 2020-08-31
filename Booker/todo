@@ -1,6 +1,6 @@
 - Saját könyvek és összes könyv külön kereshetősége
 - Főoldal ne az össze könyvet mutassa(akkor mit?)
-- Hozzáadás aktualizálása (hozzáadott könyv bejelölése automatikusan)
+- Hozzáadás aktualizálása (hozzáadott könyv bejelölése automatikusan, ISBN mező)
 - REGSISZTRÁCIÓ
 - REST api
 - REST alapú android app
