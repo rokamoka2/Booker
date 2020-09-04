@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="books")
 public class Book {
@@ -73,10 +76,12 @@ public class Book {
 		this.notedDate = notedDate;
 	}
 
+	@JsonIgnore
 	public Set<User> getUsers() {
 		return users;
 	}
 
+	@JsonProperty
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}

@@ -27,7 +27,7 @@ public class BookService {
 		return book;
 	}
 	
-	public List<Book> getSpecificBook(String searched){
+	public List<Book> findBookByName(String searched){
 		List<Book> result = bookRepo.findByAuthor(searched);
 		result.addAll(bookRepo.findByTitle(searched));
 		return result;

@@ -132,7 +132,7 @@ public class HomeController {
 	public String Search(@PathVariable(value="searched") String searched, Model model){
 		model.addAttribute("pageTitle", "Könyv Adatbázis Keresés");
 		log.info("Új keresés erre: " + searched);
-		List<Book> result = bookService.getSpecificBook(searched);
+		List<Book> result = bookService.findBookByName(searched);
 		model.addAttribute("books", result);
 		model.addAttribute("count", "Ennyi könyvet találtam: " + result.size());
 		return "index";		
