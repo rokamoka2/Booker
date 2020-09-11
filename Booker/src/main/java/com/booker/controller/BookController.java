@@ -44,27 +44,39 @@ import com.booker.service.UserServiceImpl;
 		}
 		
 		@RequestMapping("/book/{ID}")
-		public String book(@PathVariable(value="ID") Long id, Model model) throws JSONException, IOException {
+		public String book(@PathVariable(value="ID") Long id, Model model) throws Exception {
 			boolean detailed = false;
 			String description = "";
 			String image = "";
 	//		User user = getAuthenticatedUser();
 			Book book = bookService.FindById(id);
 			if ( book.getMolyId() == null && book.getIsbn() != null && !book.getIsbn().isEmpty()) {
+				try {
 				JSONObject obj = new JSONObject(API.getBookByISBN(book.getIsbn()));
 				book.setMolyId(obj.getLong("id"));
 				bookService.SaveBook(book);
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					log.debug("Hiba az ISBN lekérdezésben: " + e.getMessage());
+					
+				}
 			}
-//			else if ( book.getMolyId() == null) {
-//				JSONObject obj = new JSONObject(API.getBookByTitle(book.getTitle()));
-//				book.setMolyId(obj.getLong("id"));
-//				bookService.SaveBook(book);
-//			}
 			if ( book.getMolyId()!= null){
-				JSONObject obj = new JSONObject(API.getBookByMolyID(book.getMolyId()));
-				description = obj.getJSONObject("book").getString("description");
-				image = obj.getJSONObject("book").getString("cover");
-				detailed = true;			
+				try {
+					JSONObject obj = new JSONObject(API.getBookByMolyID(book.getMolyId()));
+					description = obj.getJSONObject("book").getString("description");
+					image = obj.getJSONObject("book").getString("cover");
+					detailed = true;
+				} catch (Exception e) {
+					// TODO: handle exception
+					log.info("Hibás MolyID: " + book.getMolyId());
+					book.setMolyId(null);
+					bookService.SaveBook(book);
+					log.info("Hibás MolyID törölve.");
+					book(id, model);					
+				}
+							
 			}
 			model.addAttribute("detailed", detailed);
 			model.addAttribute("description", description);
