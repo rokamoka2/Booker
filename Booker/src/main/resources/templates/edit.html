@@ -4,10 +4,10 @@
 	<meta charset="utf-8">
 	</head>
 	<div id="content1" layout:fragment="content">	
-		<div class="container">
-			<form action="#" th:action="@{/modifybook}" th:object="${book}" method="post">
-				<div class="form-group">
-	   				<input type="text" th:field="*{id}" value="${book.id}" class="form-control form-control-lg" id="id" hidden="true">
+		<div class="container"><br>
+			<form action="#" th:action="@{/savebook}" th:object="${book}" method="post">
+				<div class="form-group" hidden>
+	   				<input type="text" th:field="*{id}" value="${book.id}" class="form-control form-control-lg" id="id">
 	 			</div>
 				<div class="form-group">
 	   				<label for="author" class="formlabel">Szerző:</label>
@@ -33,10 +33,14 @@
 	   				<label for="place" class="formlabel">Hely:</label>
 	   				<input type="text" th:field="*{place}" value="${book.place}" class="form-control form-control-lg" id="place" placeholder="A könyv fizikai elhelyezkedése">
 	 			</div>
+	 			<div class="form-group">
+	   				<label for="author" class="formlabel">ISBN azonosító:</label>
+	   				<input type="text" th:field="*{isbn}" value="${book.isbn}" class="form-control form-control-lg" id="author" placeholder="Szerző neve">
+	 			</div>
 	 			<button type="submit" class="btn btn-success">Küldés</button>
 	 			<button type="reset" class="btn btn-danger">Visszaállítás</button>				
 			</form>
 		</div>		
 
 	</div>
-			</html>
+</html>

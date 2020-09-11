@@ -25,7 +25,7 @@
 	    					 <td class="align-middle" th:text = "${book.releaseYear}">Alfreds Futterkiste</td>
 	    					 <td>
 	    					 	<a th:href="@{/claim/{id}(id=${book.id})}">Bejelölés</a><br>
-	    					 	<a th:href="@{/modify/{id}(id=${book.id})}">Módosítás</a><br>
+	    					 	<a th:href="@{/edit/{id}(id=${book.id})}">Szerkesztés</a><br>
 	    					 	<a th:href="@{/delete/{id}(id=${book.id})}" onClick="return Confirm();">Törlés</a>
 	    					 </td>
 	    				</tr>

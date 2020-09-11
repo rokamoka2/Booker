@@ -74,17 +74,15 @@ public class HomeController {
 	public String Add(Model model) {
 		model.addAttribute("pageTitle", "Könyv Hozzáadás");	
 		model.addAttribute("book", new Book());
-		return "add";
+		return "edit";
 	}
 	
-	@PostMapping("/addbook")
+	@PostMapping("/savebook")
 	public String addbook(@ModelAttribute Book book,Model model) {
-		System.out.println("ÚJ könyv " + book.getTitle() );
 		book.setNotedDate(new Date());
-//		log.info(book.getUser().getUsername());
 		bookService.SaveBook(book);
 		log.info(book.getTitle() + " elmentve!");
-		return this.Index(model);
+		return "redirect:/book/" + book.getId();
 	}
 	
 	@RequestMapping("/admin")
@@ -105,11 +103,11 @@ public class HomeController {
 		return this.Admin(model);
 	}
 	
-	@RequestMapping("/modify/{ID}")
+	@RequestMapping("/edit/{ID}")
 	public String Modify(@PathVariable(value="ID") Long id, Model model) {
 		model.addAttribute("pageTitle", "Könyv Módosítás");	
 		model.addAttribute("book", bookService.FindById(id));
-		return "modify";
+		return "edit";
 	}
 	
 	@PostMapping("/modifybook")
