@@ -18,7 +18,7 @@
 	    				</tr>
 	    				<tr th:each = "book : ${books}">
 	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/search/{searched}(searched=${book.author})}" th:text = "${book.author}" >John Wayne</a></td>
-	    					 <td class="align-middle" th:text = "${book.title}">Kamu cím</td>
+	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/book/{id}(id=${book.id})}" th:text = "${book.title}" >Micimackó</a></td>
 	    					 <td class="align-middle" th:text = "${book.genre}">Germany</td>
 	    					 <td class="align-middle" th:text = "${book.series}">Germany</td>
 	    					 <td class="align-middle" th:text = "${book.releaseYear}">Alfreds Futterkiste</td>
