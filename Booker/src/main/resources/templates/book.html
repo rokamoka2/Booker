@@ -5,22 +5,32 @@
 	</head>
 	<div id="content1" layout:fragment="content">	
 		<div class="container">
-			<div id="title">
-				<h1>
-					<span th:utext="${book.author}">író neve</span>:
-					<span th:utext="${book.title}">Könyv címe!</span>
-				</h1>
+			<div class="row">
+				<div id="title">
+					<h1>
+						<span th:utext="${book.author}">író neve</span>:
+						<span th:utext="${book.title}">Könyv címe!</span>
+					</h1>
+				</div>
 			</div>
-			
 			<div th:if="${detailed == true}" id="detailed info">
-				<div id="cover"><img th:src="${image}"></div>
-				<div id="desc" th:utext="${description}">Részletes leírás</div>
+				<div class="row">
+					<div class="col-3">
+						<div id="cover"><img th:src="${image}" style="width: 256px;"></div>
+					</div>
+					<div class="col">
+						<div id="desc" th:utext="${description}">Részletes leírás</div>
+					</div>
+				</div>
 			</div>
-			<div th:if="${detailed == false}" id="detailed info">
-				<div id="desc">Sajnos nem található részletes információ.</div>
-				<div id="desc">Töltsd ki vagy javítsd a könyv ISBN számát!</div>
+			<div class="row">
+				<div class="col">
+					<div th:if="${detailed == false}" id="detailed info">
+						<p>Sajnos nem található részletes információ, töltsd ki vagy javítsd a könyv ISBN számát!</p>
+						<a th:href="@{/edit/{id}(id=${book.id})}">Szerkesztés</a><br>
+					</div>
+				</div>
 			</div>
-		</div>		
-
+		</div>
 	</div>
-			</html>
+</html>
