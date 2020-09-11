@@ -10,18 +10,24 @@
 				<div class="table-responsive">
 					<table class="table">
 	 					 <tr>
-	 					 	<th class="align-middle text-center">Szerző</th>
-	   						<th class="align-middle text-center">Cím</th>
-	   						<th class="align-middle text-center">Műfaj</th>
-	   						<th class="align-middle text-center">Sorozat</th>
-	   						<th class="align-middle text-center">Kiadás éve</th>
+	 					 	<th class="align-middle text-center" th:text="#{author}">Szerző</th>
+	   						<th class="align-middle text-center" th:text="#{title}">Cím</th>
+	   						<th class="align-middle text-center" th:text="#{genre}">Műfaj</th>
+	   						<th class="align-middle text-center" th:text="#{series}">Sorozat</th>
+	   						<th class="align-middle text-center" th:text="#{release}">Kiadás éve</th>
+	   						<th></th>
 	    				</tr>
 	    				<tr th:each = "book : ${books}">
 	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/search/{searched}(searched=${book.author})}" th:text = "${book.author}" >John Wayne</a></td>
-	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/book/{id}(id=${book.id})}" th:text = "${book.title}" >Micimackó</a></td>
+	    					 <td class="align-middle" th:id="${book.id}"><a th:href="@{/book/{id}(id=${book.id})}" th:text = "${book.title}" >JMicimackó</a></td>
 	    					 <td class="align-middle" th:text = "${book.genre}">Germany</td>
 	    					 <td class="align-middle" th:text = "${book.series}">Germany</td>
 	    					 <td class="align-middle" th:text = "${book.releaseYear}">Alfreds Futterkiste</td>
+	    					 <td>
+	    					 	<a th:href="@{/claim/{id}(id=${book.id})}" th:text="#{claim}">Bejelölés</a><br>
+	    					 	<a th:href="@{/edit/{id}(id=${book.id})}" th:text="#{edit}">Szerkesztés</a><br>
+	    					 	<a th:href="@{/delete/{id}(id=${book.id})}" th:text="#{delete}" onClick="return Confirm();">Törlés</a>
+	    					 </td>
 	    				</tr>
 	    			</table>
 				</div>

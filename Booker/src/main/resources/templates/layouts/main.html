@@ -39,16 +39,16 @@
 			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			    <ul class="navbar-nav mr-auto">
 			      <li class="nav-item active">
-			        <a class="nav-link" href="/">Lista <span class="sr-only">(current)</span></a>
+			        <a class="nav-link" href="/" th:text="#{index}">Lista <span class="sr-only">(current)</span></a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/mybooks">Könyveim</a>
+			        <a class="nav-link" href="/mybooks" th:text="#{mybooks}">Könyveim</a>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/add">Hozzáadás</a>
+			        <a class="nav-link" href="/add" th:text="#{add}">Hozzáadás</a>
 			      </li>
 			      <li class="nav-item dropdown" sec:authorize="hasRole('admin')">
-			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{warning}">
 			          Admin
 			        </a>
 			        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -56,15 +56,38 @@
 			        </div>
 			      </li>
 			      <li class="nav-item">
-			        <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">Kijelentkezés</a>
+			        <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true" th:text="#{logout}">Kijelentkezés</a>
 			      </li>
 			    </ul>
 			    <form class="form-inline my-2 my-lg-0" onSubmit="return Search();" method="get">
-			      <input class="form-control mr-sm-2" type="search" placeholder="Keresés" aria-label="Keresés">
+			      <input class="form-control mr-sm-2" type="search" th:placeholder="#{searchplaceholder}" aria-label="Keresés">
 			      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Keresés</button>
 			    </form>
 			  </div>
 			</nav>
+			<div class="alert alert-danger" th:if="${danger != null}">
+					<strong th:text="#{danger}">Hiba!</strong> <span th:text="${danger}">Indicates a dangerous or potentially negative action.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="alert alert-success" th:if="${succes != null}">
+					<strong th:text="#{succes}">Siker!</strong> <span th:text="${succes}">Indicates a dangerous or potentially negative action.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>				</div>
+				<div class="alert alert-info" th:if="${info != null}">
+					<strong th:text="#{info}">Info!</strong> <span th:text="${info}">Indicates a dangerous or potentially negative action.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="alert alert-warning" th:if="${warning != null}">
+					<strong th:text="#{warning}">Figyelmeztetés!</strong> <span th:text="${warning}">Indicates a dangerous or potentially negative action.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 			<div id="content1" layout:fragment="content">
 			</div>			
 			<footer class="footer">
