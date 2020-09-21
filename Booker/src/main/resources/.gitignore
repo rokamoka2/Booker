@@ -1,2 +1,4 @@
 /application.properties
 /application.yml
+/application-prod.properties
+/application-test.properties
