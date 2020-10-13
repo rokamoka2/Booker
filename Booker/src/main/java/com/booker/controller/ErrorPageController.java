@@ -4,8 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -17,10 +15,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 @Controller
 public class ErrorPageController implements ErrorController {
 	
-//	private static final String ERR_PATH = "/error";
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-	
 	private ErrorAttributes errorAttributes;
 	
 	@Autowired
@@ -30,7 +25,6 @@ public class ErrorPageController implements ErrorController {
 
 	@Override
 	public String getErrorPath() {
-		// TODO Auto-generated method stub
 		return "/error";
 	}
 	
@@ -39,7 +33,6 @@ public class ErrorPageController implements ErrorController {
 		ServletWebRequest rA = new ServletWebRequest(request);
 		Map<String, Object> error = this.errorAttributes.getErrorAttributes(rA, true);
 		model.addAllAttributes(error);
-//		log.debug("HIBAAAA: " + error.get("error") + " Üzenet: " + error.get("message") + " Hibakód: " + error.get("status"));
 		int errorNum = (int) error.get("status");
 		switch (errorNum) 
 		{

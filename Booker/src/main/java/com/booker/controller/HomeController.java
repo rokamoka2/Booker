@@ -39,7 +39,7 @@ public class HomeController {
 	private RoleService roleService;
 	
 	@RequestMapping("/")
-	public String Index(Model model){
+	public String getIndex(Model model){
 		List<Book> books = bookService.getBooks();
 		model.addAttribute("pageTitle", "Könyv Adatbázis");	
 		model.addAttribute("books", books);
@@ -48,30 +48,30 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/mybooks")
-	public String MyBooks(Model model){
+	public String getMyBooks(Model model){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		model.addAttribute("pageTitle", "Könyv Adatbázis");	
-		Set books = userService.findByUsername(auth.getName()).getBooks();		
+		Set<Book> books = userService.findByUsername(auth.getName()).getBooks();		
 		model.addAttribute("books", books);
 		model.addAttribute("count", books.size());
 		return "mybooks";		
 	}
 	
 	@RequestMapping("/login")
-	public String Login(Model model){
+	public String getLogin(Model model){
 		model.addAttribute("pageTitle", "Könyv Adatbázis");	
 		return "login";		
 	}
 	
 	@RequestMapping("/regist")
-	public String Regist(Model model){
+	public String getRegist(Model model){
 		model.addAttribute("pageTitle", "Könyv Adatbázis - Regisztráció");
 		model.addAttribute("newuser", new User());
 		return "regist";		
 	}
 	
 	@RequestMapping("/add")
-	public String Add(Model model) {
+	public String getAdd(Model model) {
 		model.addAttribute("pageTitle", "Könyv Hozzáadás");	
 		model.addAttribute("book", new Book());
 		return "edit";
@@ -81,12 +81,11 @@ public class HomeController {
 	public String addbook(@ModelAttribute Book book,Model model) {
 		book.setNotedDate(new Date());
 		bookService.SaveBook(book);
-		log.info(book.getTitle() + " elmentve!");
 		return "redirect:/book/" + book.getId();
 	}
 	
 	@RequestMapping("/admin")
-	public String Admin(Model model){
+	public String getAdmin(Model model){
 		model.addAttribute("pageTitle", "Könyv Admin");	
 		model.addAttribute("users", userService.getAllUser());
 		model.addAttribute("roles", roleService.getRoles());
@@ -97,39 +96,38 @@ public class HomeController {
 	
 	@PostMapping("/adduser")
 	public String adduser(@ModelAttribute User newuser,Model model) {
-		log.info("ÚJ user " + newuser.getUsername() );
 		userService.addUser(newuser);
-		log.info(newuser.getUsername() + " elmentve!");
-		return this.Admin(model);
+		log.info("New user{}", newuser.getUsername());
+		return this.getAdmin(model);
 	}
 	
 	@RequestMapping("/edit/{ID}")
-	public String Modify(@PathVariable(value="ID") Long id, Model model) {
+	public String getModify(@PathVariable(value="ID") Long id, Model model) {
 		model.addAttribute("pageTitle", "Könyv Módosítás");	
 		model.addAttribute("book", bookService.FindById(id));
 		return "edit";
 	}
 	
 	@PostMapping("/modifybook")
-	public String ModifyBook(@ModelAttribute Book book,Model model) {
-		log.info("Könyv módosítás " + book.getTitle() );
+	public String getodifyBook(@ModelAttribute Book book,Model model) {
+		log.info("Könyv módosítása: {}", book.getTitle() );
 		bookService.UpdateBook(book);
-		log.info(book.getTitle() + " elmentve!");
+		log.info("Saving {}", book.getTitle());
 		return "redirect:/#" + book.getId();
 	}
 	
 	@RequestMapping("/delete/{ID}")
-	public String Delete(@PathVariable(value="ID") Long id, Model model) {
+	public String getDelete(@PathVariable(value="ID") Long id, Model model) {
 		model.addAttribute("pageTitle", "Könyv Törlés");	
-		log.info(bookService.FindById(id).getTitle() + " törlése!");
+		log.info("Deleting {}" , bookService.FindById(id).getTitle());
 		bookService.DeleteBook(bookService.FindById(id));
-		return this.Index(model);
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/search/{searched}")
-	public String Search(@PathVariable(value="searched") String searched, Model model){
+	public String get(@PathVariable(value="searched") String searched, Model model){
 		model.addAttribute("pageTitle", "Könyv Adatbázis Keresés");
-		log.info("Új keresés erre: " + searched);
+		log.info("Searching {}", searched);
 		List<Book> result = bookService.findBookByName(searched);
 		model.addAttribute("books", result);
 		model.addAttribute("count", "Ennyi könyvet találtam: " + result.size());
@@ -138,18 +136,15 @@ public class HomeController {
 	
 	@PostMapping("/addrole")
 	public String adduser(@ModelAttribute Role newRole,Model model) {
-		log.info("ÚJ role " + newRole.getName());
+		log.info("New role {}" , newRole.getName());
 		roleService.Save(newRole);
-		log.info(newRole.getName() + " elmentve!");
-		return this.Admin(model);
+		return this.getAdmin(model);
 	}
 	
 	@RequestMapping("/deleteuser/{ID}")
-	public String DeleteUser(@PathVariable(value="ID") Long id, Model model) {
+	public String getDeleteUser(@PathVariable(value="ID") Long id, Model model) {
 		model.addAttribute("pageTitle", "Felhasználó törlés");	
 		userService.DeleteUser(userService.FindByID(id));
-		return this.Admin(model);
-	}
-	
-		
+		return this.getAdmin(model);
+	}	
 }

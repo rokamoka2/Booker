@@ -1,8 +1,5 @@
 package com.booker.controller;
 
-import java.io.IOException;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +27,7 @@ import com.booker.service.UserServiceImpl;
 		private UserServiceImpl userService;
 		
 		@Autowired
-		private DataService API;
+		private DataService dService;
 		
 		private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -39,7 +36,7 @@ import com.booker.service.UserServiceImpl;
 			User user = getAuthenticatedUser();
 			user.getBooks().add(bookService.FindById(id));
 			userService.saveUser(user);
-			log.debug(bookService.FindById(id).getTitle() + " hozzáadva " + user.getUsername() + "felhasználóhoz!");
+			log.debug("{} claimed {} book", user.getUsername(), bookService.FindById(id).getTitle());
 			return "redirect:/";
 		}
 		
@@ -48,29 +45,26 @@ import com.booker.service.UserServiceImpl;
 			boolean detailed = false;
 			String description = "";
 			String image = "";
-	//		User user = getAuthenticatedUser();
 			Book book = bookService.FindById(id);
 			if ( book.getMolyId() == null && book.getIsbn() != null && !book.getIsbn().isEmpty()) {
 				try {
-				JSONObject obj = new JSONObject(API.getBookByISBN(book.getIsbn()));
+				JSONObject obj = new JSONObject(dService.getBookByISBN(book.getIsbn()));
 				book.setMolyId(obj.getLong("id"));
 				bookService.SaveBook(book);
 					
 				} catch (Exception e) {
-					// TODO: handle exception
-					log.debug("Hiba az ISBN lekérdezésben: " + e.getMessage());
+					log.debug("Hiba az ISBN lekérdezésben: {}" , e.getMessage());
 					
 				}
 			}
 			if ( book.getMolyId()!= null){
 				try {
-					JSONObject obj = new JSONObject(API.getBookByMolyID(book.getMolyId()));
+					JSONObject obj = new JSONObject(dService.getBookByMolyID(book.getMolyId()));
 					description = obj.getJSONObject("book").getString("description");
 					image = obj.getJSONObject("book").getString("cover");
 					detailed = true;
 				} catch (Exception e) {
-					// TODO: handle exception
-					log.info("Hibás MolyID: " + book.getMolyId());
+					log.info("Hibás MolyID: {}" , book.getMolyId());
 					book.setMolyId(null);
 					bookService.SaveBook(book);
 					log.info("Hibás MolyID törölve.");
@@ -87,8 +81,7 @@ import com.booker.service.UserServiceImpl;
 		
 		private User getAuthenticatedUser() {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			User user = userService.findByUsername(auth.getName());
-			return user;
+			return userService.findByUsername(auth.getName());
 			}
 
 }
