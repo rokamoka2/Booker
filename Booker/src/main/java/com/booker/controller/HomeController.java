@@ -1,6 +1,7 @@
 package com.booker.controller;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.booker.domain.Book;
 import com.booker.domain.Role;
+import com.booker.domain.Shelf;
 import com.booker.domain.User;
+import com.booker.domain.Wardrobe;
 import com.booker.service.BookService;
 import com.booker.service.RoleService;
 import com.booker.service.UserServiceImpl;
@@ -49,9 +52,16 @@ public class HomeController {
 	
 	@RequestMapping("/mybooks")
 	public String getMyBooks(Model model){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		model.addAttribute("pageTitle", "Könyv Adatbázis");	
-		Set<Book> books = userService.findByUsername(auth.getName()).getBooks();		
+		User user = getAuthenticatedUser();
+		Set<Book> books = new HashSet<>();
+		model.addAttribute("pageTitle", "Könyv Adatbázis");
+		for (Wardrobe wardrobe : user.getWardrobes()){
+			for(Shelf shelf : wardrobe.getShelfs()){
+				for(Book book : shelf.getBooks()){
+					books.add(book);
+				}
+			}
+		}	
 		model.addAttribute("books", books);
 		model.addAttribute("count", books.size());
 		return "mybooks";		
@@ -146,5 +156,10 @@ public class HomeController {
 		model.addAttribute("pageTitle", "Felhasználó törlés");	
 		userService.DeleteUser(userService.FindByID(id));
 		return this.getAdmin(model);
-	}	
+	}
+
+	private User getAuthenticatedUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return userService.findByUsername(auth.getName());
+	}
 }

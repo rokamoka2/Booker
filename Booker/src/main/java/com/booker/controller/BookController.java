@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.booker.domain.Book;
+import com.booker.domain.Shelf;
 import com.booker.domain.User;
 import com.booker.service.BookService;
 import com.booker.service.DataService;
+import com.booker.service.ShelfService;
 import com.booker.service.UserServiceImpl;
 
 	@Controller
@@ -28,15 +30,22 @@ import com.booker.service.UserServiceImpl;
 		
 		@Autowired
 		private DataService dService;
+
+		@Autowired
+		private ShelfService sService;
 		
 		private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-		@RequestMapping("/claim/{ID}")
-		public String claim(@PathVariable(value="ID") Long id, Model model) {
+		@RequestMapping("/claim/{shelfId}/{bookId}")
+		public String claim(@PathVariable(value="bookId") Long bookId, @PathVariable(value = "shelfId") Long shelfId, Model model) {
 			User user = getAuthenticatedUser();
-			user.getBooks().add(bookService.FindById(id));
-			userService.saveUser(user);
-			log.debug("{} claimed {} book", user.getUsername(), bookService.FindById(id).getTitle());
+			Book book = bookService.FindById(bookId);
+			Shelf shelf = sService.getById(shelfId);
+			if(user.getUsername().equals(shelf.getWardrobe().getOwner().getUsername())){
+				shelf.getBooks().add(book);
+			}
+			sService.saveShelf(shelf);
+			log.debug("{} claimed {} book", user.getUsername(), book.getTitle());
 			return "redirect:/";
 		}
 		

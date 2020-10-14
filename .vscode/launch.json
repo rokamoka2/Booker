@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BookerApplication<Booker>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.booker.BookerApplication",
+            "projectName": "Booker",
+            "args": ""
+        }
+    ]
+}

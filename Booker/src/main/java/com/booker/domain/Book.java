@@ -33,10 +33,11 @@ public class Book {
 	private String place;
 	private Date notedDate;
 	@ManyToMany(mappedBy = "books")
-	private Set<User> users = new HashSet<User>();
+	private Set<Shelf> shelf = new HashSet<>();
 		
-	//Constructor
+	
 	public Book() {
+		// Constructor
 	}
 	
 	//Getters and Setters
@@ -76,16 +77,6 @@ public class Book {
 		this.notedDate = notedDate;
 	}
 
-	@JsonIgnore
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	@JsonProperty
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -121,7 +112,13 @@ public class Book {
 	public void setMolyId(Long molyId) {
 		this.molyId = molyId;
 	}
-	
-	
+
+	public Set<Shelf> getShelf() {
+		return this.shelf;
+	}
+
+	public void setShelf(Set<Shelf> shelf) {
+		this.shelf = shelf;
+	}
 
 }
